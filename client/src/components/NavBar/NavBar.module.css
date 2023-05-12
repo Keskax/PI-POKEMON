@@ -1,0 +1,20 @@
+.navContainer {
+  background-color: blueviolet;
+  display: flex;
+}
+
+.logo {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  width: 50px; /* ajustar al tamaño deseado */
+}
+
+.createPokemon {
+  display: flex;
+  margin-top: 20px;
+  margin-bottom: 10px;
+  margin-left: 80rem;
+  align-items: center;
+  background-color: red;
+  border-radius: 10px;
+}
