@@ -1,0 +1,77 @@
+.name {
+  font-family: Montserrat;
+  padding: 15px;
+  font-size: 20px;
+  font-weight: 500;
+  background-color: blueviolet;
+  margin-left: -10px;
+  margin-right: -10px;
+  color: white;
+  text-align: center;
+  overflow: hidden;
+  text-decoration: none;
+}
+
+.imagen {
+  display: flex;
+  flex-direction: column;
+  width: 110%;
+  height: 200px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+
+  object-position: center;
+}
+
+.card {
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  border-radius: 20px;
+  width: 275px;
+  height: 400px;
+  margin: 20px;
+  background-color: #faf8f8;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  font-family: Montserrat;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card a {
+  color: black;
+  text-decoration: none;
+}
+
+.contenido {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: Montserrat;
+  letter-spacing: 2px;
+  margin: 15px;
+  font-size: 16px;
+  color: #333333;
+  letter-spacing: -0.5px;
+  text-align: center;
+  height: 130px;
+  font-family: Montserrat;
+}
+
+.temp {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  font-size: 14px;
+  color: #666666;
+  margin-top: 5px;
+}
+
+.weight {
+  font-family: Montserrat;
+  font-size: 15px;
+  margin-top: 19px;
+  margin-bottom: 10px;
+}

@@ -5,6 +5,7 @@ import { getAllPokemon } from "../../Redux/action/action";
 import style from "./Home.module.css";
 import { Link } from "react-router-dom";
 import PokemonCard from "../PokemonCard/PokemonCard";
+import Paginado from "../Paginado/paginado";
 
 //!Trae y muestra los pokemons en Home
 export default function Home() {
@@ -14,6 +15,30 @@ export default function Home() {
   useEffect(() => {
     dispatch(getAllPokemon());
   }, []);
+
+  //!Paginado
+
+  const [currentPage, setCurrentPage] = useState(1); //numero de paginas
+  const [pokemonsPerPage, setPokemonsPerPage] = useState(12); //numero de poke por pagina;
+
+  const lastPokemon = currentPage * pokemonsPerPage;
+  const firstPokemon = lastPokemon - pokemonsPerPage;
+
+  const currentPokemon = allPokemons.slice(firstPokemon, lastPokemon); //esta constate guarda los poke que están en la pag
+
+  // constate que renderiza los numeros de pag
+  const paginado = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
+  function pagePrev() {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  }
+
+  function pageNext() {
+    let lastPage = Math.ceil(allPokemons.length / pokemonsPerPage);
+    if (currentPage < lastPage) setCurrentPage(currentPage + 1);
+  }
 
   return (
     <div>
@@ -66,7 +91,7 @@ export default function Home() {
       </select>
 
       <div className={style.container}>
-        {allPokemons?.map((poke) => {
+        {currentPokemon?.map((poke) => {
           return (
             <Link to={"/home" + poke.id}>
               <PokemonCard
@@ -78,6 +103,13 @@ export default function Home() {
           );
         })}
       </div>
+      <Paginado
+        pokemonsPerPage={pokemonsPerPage}
+        allPokemons={allPokemons.length}
+        paginado={paginado}
+        pagePrev={pagePrev}
+        pageNext={pageNext}
+      />
     </div>
   );
 }

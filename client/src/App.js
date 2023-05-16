@@ -10,7 +10,14 @@ import Home from "./components/Home/home";
 function App() {
   return (
     <div className="App">
-      <Route path="/" component={NavBar} />
+      <Route
+        path="/"
+        render={({ location }) => {
+          if (location.pathname !== "/") {
+            return <NavBar />;
+          }
+        }}
+      />
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route path="/home" component={Home} />
