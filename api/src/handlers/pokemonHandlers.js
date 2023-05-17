@@ -5,10 +5,28 @@ const {
   searchPokemonByName,
 } = require("../controllers/pokemonControllers");
 
+const getPokemonDBHandler = async (req, res) => {
+  const { name } = req.query;
+  try {
+    if (name) {
+      const response = await getAllPokemon(name);
+      return res.status(200).json(response);
+    }
+    const response = await getAllPokemon();
+    return res.status(200).json(response);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
 const createPokemonHandler = async (req, res) => {
   try {
     const { name, image, hp, attack, defense, speed, height, weight, type } =
       req.body;
+
+    // Asegurarse de que los tipos se pasen como un arreglo
+    const types = Array.isArray(type) ? type : [type];
+
     const newPoke = await createPokemon(
       name,
       image,
@@ -18,9 +36,14 @@ const createPokemonHandler = async (req, res) => {
       speed,
       height,
       weight,
-      type
+      types // Pasar los tipos como un arreglo
     );
-    res.status(201).json(newPoke);
+
+    const response = {
+      ...newPoke.toJSON(),
+      types,
+    };
+    res.status(201).json(response);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
@@ -36,7 +59,7 @@ const getPokemonHandler = async (req, res) => {
 };
 
 const pokemonByIdHandler = async (req, res) => {
-  const id = req.params.id;
+  const { id } = req.params;
 
   try {
     const pokemon = await pokemonById(id);
@@ -52,15 +75,17 @@ const pokemonByIdHandler = async (req, res) => {
 
 const searchPokemonByNameHandler = async (req, res) => {
   try {
-    const name = req.query.name;
-    const pokemons = await searchPokemonByName(name);
-    res.json(pokemons);
+    const { name } = req.query;
+    const result = await searchPokemonByName(name);
+    res.json(result);
   } catch (error) {
-    res.status(400).json({ error: error.message });
+    console.error(error);
+    res.status(500).json({ message: "Internal server error" });
   }
 };
 
 module.exports = {
+  getPokemonDBHandler,
   createPokemonHandler,
   getPokemonHandler,
   pokemonByIdHandler,

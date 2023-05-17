@@ -1,5 +1,5 @@
 const axios = require("axios");
-const { Pokemon } = require("../db");
+const { Pokemon, Type } = require("../db");
 const { URL_API } = process.env;
 
 const createPokemon = async (
@@ -13,44 +13,64 @@ const createPokemon = async (
   weight,
   type
 ) => {
-  const existingPokemon = await Pokemon.findOne({ name });
-  let existingPokemonApi;
-  try {
-    existingPokemonApi = await axios(
-      `https://pokeapi.co/api/v2/pokemon/${name}`
-    );
-  } catch (error) {
-    existingPokemonApi = error.response;
-  }
-  if (
-    existingPokemon ||
-    (existingPokemonApi && existingPokemonApi.status === 200)
-  ) {
-    throw new Error("Pokemon already exist");
-  }
-  const data = {
+  const createdPokemon = await Pokemon.create({
     name,
-    image,
+    image, // Incluir la propiedad 'image' en el objeto creado
     hp,
     attack,
     defense,
     speed,
     height,
     weight,
-    type,
-  };
-  const createPoke = await Pokemon.create(data);
-  return createPoke;
+  });
+
+  // Buscar los tipos de Pokémon en la base de datos
+  const types = await Type.findAll({
+    where: {
+      name: type,
+    },
+  });
+
+  // Asociar los tipos al nuevo Pokémon
+  await createdPokemon.addTypes(types);
+
+  return createdPokemon;
 };
 
+//! Trae info de los Pokemon en la bdd
+const getPokemonDB = async () => {
+  const allPokemon = await Pokemon.findAll({
+    attributes: [
+      "id",
+      "name",
+      "attack",
+      "defense",
+      "speed",
+      "height",
+      "weight",
+    ],
+    include: {
+      model: Type,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
+  });
+
+  return allPokemon;
+};
+
+//!Trae info de la API
+
 const getNPokemon = async () => {
-  const pokemonData = (await axios(`${URL_API}`)).data;
+  const pokemonData = (await axios(`${URL_API}?offset=0&limit=100`)).data;
   const allPokemons = pokemonData.results;
 
   return allPokemons;
 };
 
-const getAllPokemon = async () => {
+const getPokemonApi = async () => {
   const pokemonDb = await Pokemon.findAll();
 
   const pokemonList = await getNPokemon();
@@ -77,16 +97,34 @@ const getAllPokemon = async () => {
   return pokemons;
 };
 
+//! Concatenar los datos de la BDD y la API
+
+const getAllPokemon = async (name) => {
+  const apiInfo = await getPokemonApi();
+  const dbInfo = await getPokemonDB();
+  const infoTotal = [...apiInfo, ...dbInfo];
+
+  if (name) {
+    const pokeFilter = infoTotal.filter((pokemon) =>
+      pokemon.name.toLowerCase().includes(name.toLowerCase())
+    );
+    return pokeFilter;
+  } else {
+    return infoTotal;
+  }
+};
+
 const searchPokemonByName = async (name) => {
-  const pokemonDb = await Pokemon.findOne({
+  const pokemonDb = await Pokemon.findAll({
     where: { name: name.toLowerCase() },
   });
 
-  if (pokemonDb) {
+  if (pokemonDb.length > 0) {
     return pokemonDb;
   } else {
     const response = await axios(`${URL_API}/${name.toLowerCase()}`);
     const pokemon = response.data;
+
     return {
       id: pokemon.id,
       name: pokemon.name,
@@ -103,7 +141,11 @@ const searchPokemonByName = async (name) => {
 };
 
 const pokemonById = async (id) => {
-  const pokeOne = (await axios(`https://pokeapi.co/api/v2/pokemon/${id}`)).data;
+  if (isNaN(id)) {
+    const pokeDb = await pokeDb.findByPk(id);
+    return pokeDb;
+  }
+  const pokeOne = (await axios(`${URL_API}/${id}`)).data;
   return {
     id: pokeOne.id,
     name: pokeOne.name,
