@@ -10,7 +10,9 @@ const NavBar = () => {
         <img className={style.logo} src={logo} alt="" />
       </Link>
       <div className={style.createPokemon}>
-        <Link to="/create">CREATE POKEMON</Link>
+        <Link to="/create" className={style.link}>
+          CREATE POKEMON
+        </Link>
       </div>
     </div>
   );

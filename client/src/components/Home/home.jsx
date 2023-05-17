@@ -1,7 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAllPokemon } from "../../Redux/action/action";
+import {
+  getAllPokemon,
+  getAllTypes,
+  filterPokemonsByTypes,
+  orderPokemonsByAttack,
+  orderPokemonsByName,
+} from "../../Redux/action/action";
 import style from "./Home.module.css";
 import { Link } from "react-router-dom";
 import PokemonCard from "../PokemonCard/PokemonCard";
@@ -14,6 +20,7 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(getAllPokemon());
+    dispatch(getAllTypes());
   }, []);
 
   //!Paginado
@@ -24,11 +31,16 @@ export default function Home() {
   const lastPokemon = currentPage * pokemonsPerPage;
   const firstPokemon = lastPokemon - pokemonsPerPage;
 
-  const currentPokemon = allPokemons.slice(firstPokemon, lastPokemon); //esta constate guarda los poke que están en la pag
+  const currentPokemon = allPokemons.slice(firstPokemon, lastPokemon); //esta constante guarda los poke que están en la pag
 
-  // constate que renderiza los numeros de pag
+  //! constante que renderiza los números de pag
   const paginado = (pageNumber) => {
     setCurrentPage(pageNumber);
+  };
+
+  const handleClick = (event) => {
+    event.preventDefault();
+    dispatch(getAllPokemon());
   };
 
   function pagePrev() {
@@ -40,11 +52,35 @@ export default function Home() {
     if (currentPage < lastPage) setCurrentPage(currentPage + 1);
   }
 
+  //! fn que filtra los types en el home
+
+  const types = useSelector((state) => state.Types);
+
+  function handleFilterTypes(event) {
+    dispatch(filterPokemonsByTypes(event.target.value));
+  }
+
+  //!
+
+  const [order, setOrder] = useState("");
+
+  function handlerOrderByAttack(event) {
+    dispatch(orderPokemonsByAttack(event.target.value));
+    setCurrentPage(1);
+    setOrder(event.target.value);
+  }
+
+  function handlerOrderByName(event) {
+    dispatch(orderPokemonsByName(event.target.value));
+    setCurrentPage(1);
+    setOrder(event.target.value);
+  }
+
   return (
     <div>
       <span className={style.filter}>Sort by:</span>
       <select
-        // onChange={(event) => handleOrderByName(event)}
+        onChange={(event) => handlerOrderByName(event)}
         className={style.content}
       >
         <option disabled selected defaultValue>
@@ -55,7 +91,7 @@ export default function Home() {
       </select>
 
       <select
-        // onChange={(event) => handleFilterAttack(event)}
+        onChange={(event) => handlerOrderByAttack(event)}
         className={style.content}
       >
         <option disabled selected defaultValue>
@@ -66,16 +102,16 @@ export default function Home() {
       </select>
 
       <span className={style.filter}> Filter by: </span>
-      <select className={style.content}>
+      <select onChange={handleFilterTypes} className={style.content}>
         <option disabled selected defaultValue>
           Types
         </option>
-        <option value="all"> All </option>
-        {/* {temperaments.map((temp, index) => (
+        <option value="All"> All </option>
+        {types.map((tp, index) => (
           <option onClick={(e) => handleClick(e)} key={index}>
-            {temp.name}
+            {tp.name}
           </option>
-        ))} */}
+        ))}
       </select>
 
       <select
@@ -93,7 +129,7 @@ export default function Home() {
       <div className={style.container}>
         {currentPokemon?.map((poke) => {
           return (
-            <Link to={"/home" + poke.id}>
+            <Link to={"/home" + poke.id} className={style.link}>
               <PokemonCard
                 name={poke.name}
                 image={poke.image}
