@@ -8,6 +8,18 @@ body {
   text-decoration: none;
 }
 
+*,
+*::before,
+*::after {
+  margin: 15;
+  padding: 10;
+  box-sizing: inherit;
+}
+
+* ::-webkit-scrollbar {
+  display: none;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;

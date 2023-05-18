@@ -1,9 +1,11 @@
 import {
   GET_POKEMON,
-  FILTER_BY_TYPES,
   GET_TYPES,
+  GET_NAME_POKEMON,
+  FILTER_BY_TYPES,
   ORDER_BY_NAME,
   ORDER_BY_ATTACK,
+  FILTER_CREATED,
 } from "../action/action";
 
 const initialState = {
@@ -25,6 +27,12 @@ export function rootReducer(state = initialState, action) {
       return {
         ...state,
         Types: action.payload,
+      };
+
+    case GET_NAME_POKEMON:
+      return {
+        ...state,
+        Pokemons: action.payload,
       };
 
     case FILTER_BY_TYPES:
@@ -91,6 +99,16 @@ export function rootReducer(state = initialState, action) {
       return {
         ...state,
         Pokemons: orderAttack,
+      };
+
+    case FILTER_CREATED:
+      const allPokeCreated =
+        action.payload === "CREATED"
+          ? state.allPoke.filter((pk) => pk.createdInDb === true)
+          : state.allPoke.filter((pk) => pk.createdInDb === false);
+      return {
+        ...state,
+        Pokemons: action.payload === "All" ? state.allPoke : allPokeCreated,
       };
 
     default:

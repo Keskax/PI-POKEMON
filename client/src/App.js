@@ -1,11 +1,10 @@
 import "./App.css";
-import { Route } from "react-router-dom";
-import { Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import NavBar from "./components/NavBar/navBar";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Home from "./components/Home/home";
-// import createPokemon from "./components/CreatePokemon/createPokemon";
+import createPokemon from "./components/CreatePokemon/createPokemon";
 
 function App() {
   return (
@@ -21,7 +20,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route path="/home" component={Home} />
-        {/* <Route path="/create" element={<createPokemon />} /> */}
+        <Route path="/create" element={createPokemon} />
       </Switch>
     </div>
   );

@@ -51,12 +51,13 @@
   justify-content: center;
   font-family: Montserrat;
   letter-spacing: 2px;
-  margin: 15px;
-  font-size: 16px;
+  margin: 22px;
+  margin-top: 200px;
+  font-size: 20px;
   color: #333333;
   letter-spacing: -0.5px;
   text-align: center;
-  height: 130px;
+  height: 100px;
   font-family: Montserrat;
 }
 

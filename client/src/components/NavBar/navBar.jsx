@@ -2,6 +2,7 @@ import React from "react";
 import style from "./NavBar.module.css";
 import logo from "../../assets/fav.ico";
 import { Link } from "react-router-dom";
+import SearchBar from "../SearchBar/searchBar";
 
 const NavBar = () => {
   return (
@@ -9,8 +10,9 @@ const NavBar = () => {
       <Link to="/home">
         <img className={style.logo} src={logo} alt="" />
       </Link>
-      <div className={style.createPokemon}>
-        <Link to="/create" className={style.link}>
+      <SearchBar />
+      <div>
+        <Link to="/create" className={style.createPokemon}>
           CREATE POKEMON
         </Link>
       </div>

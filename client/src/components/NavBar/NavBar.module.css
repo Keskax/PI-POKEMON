@@ -6,19 +6,27 @@
 .logo {
   margin-top: 20px;
   margin-bottom: 10px;
+  margin-left: 6px;
   width: 50px; /* ajustar al tamaño deseado */
 }
 
 .createPokemon {
-  display: flex;
-  margin-top: 20px;
-  margin-bottom: 10px;
-  margin-left: 80rem;
-  align-items: center;
-  background-color: red;
+  background-color: #f09e23;
+  color: #fff;
+  font-size: 16px;
+  margin-right: 6px;
   border-radius: 10px;
+  padding: 12px 20px;
+  margin-left: 10px;
+  margin-top: 22px; /* Ajusta el valor según sea necesario */
+  margin-bottom: 10px; /* Ajusta el valor según sea necesario */
+  cursor: pointer;
+  font-family: Montserrat;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
 }
 
-.link {
-  text-decoration: none;
+.createPokemon:hover {
+  background-color: #be9655;
 }

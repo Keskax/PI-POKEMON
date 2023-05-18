@@ -7,6 +7,7 @@ import {
   filterPokemonsByTypes,
   orderPokemonsByAttack,
   orderPokemonsByName,
+  filterCreated,
 } from "../../Redux/action/action";
 import style from "./Home.module.css";
 import { Link } from "react-router-dom";
@@ -76,6 +77,12 @@ export default function Home() {
     setOrder(event.target.value);
   }
 
+  function handleFilterCreated(event) {
+    dispatch(filterCreated(event.target.value));
+    setCurrentPage(1);
+    setOrder(event.target.value);
+  }
+
   return (
     <div>
       <span className={style.filter}>Sort by:</span>
@@ -115,7 +122,7 @@ export default function Home() {
       </select>
 
       <select
-        // onChange={(event) => handleFilterCreated(event)}
+        onChange={(event) => handleFilterCreated(event)}
         className={style.content}
       >
         <option disabled selected defaultValue>
