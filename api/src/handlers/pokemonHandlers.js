@@ -36,7 +36,7 @@ const createPokemonHandler = async (req, res) => {
       speed,
       height,
       weight,
-      types // Pasar los tipos como un arreglo
+      type // Pasar los tipos como un arreglo
     );
 
     const response = {

@@ -15,7 +15,7 @@ const createPokemon = async (
 ) => {
   const createdPokemon = await Pokemon.create({
     name,
-    image, // Incluir la propiedad 'image' en el objeto creado
+    image,
     hp,
     attack,
     defense,
@@ -25,14 +25,14 @@ const createPokemon = async (
   });
 
   // Buscar los tipos de Pokémon en la base de datos
-  const types = await Type.findAll({
+  const foundTypes = await Type.findAll({
     where: {
-      name: type,
+      name: type, // Utilizar el campo 'id' en lugar de 'name'
     },
   });
 
   // Asociar los tipos al nuevo Pokémon
-  await createdPokemon.addTypes(types);
+  await createdPokemon.addTypes(foundTypes);
 
   return createdPokemon;
 };
