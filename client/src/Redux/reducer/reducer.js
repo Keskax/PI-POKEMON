@@ -1,17 +1,19 @@
 import {
   GET_POKEMON,
   GET_TYPES,
-  GET_NAME_POKEMON,
+  CREATE_POKEMON,
   FILTER_BY_TYPES,
   ORDER_BY_NAME,
   ORDER_BY_ATTACK,
   FILTER_CREATED,
+  POKEMON_DETAIL,
 } from "../action/action";
 
 const initialState = {
   Pokemons: [],
   allPoke: [],
   Types: [],
+  Details: [],
 };
 
 export function rootReducer(state = initialState, action) {
@@ -29,10 +31,16 @@ export function rootReducer(state = initialState, action) {
         Types: action.payload,
       };
 
-    case GET_NAME_POKEMON:
+    case CREATE_POKEMON:
       return {
         ...state,
         Pokemons: action.payload,
+      };
+
+    case POKEMON_DETAIL:
+      return {
+        ...state,
+        Details: action.payload,
       };
 
     case FILTER_BY_TYPES:

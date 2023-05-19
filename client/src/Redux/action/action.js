@@ -7,6 +7,8 @@ export const ORDER_BY_NAME = "ORDER_BY_NAME";
 export const ORDER_BY_ATTACK = "ORDER_BY_ATTACK";
 export const FILTER_CREATED = "FILTER_CREATED";
 export const GET_NAME_POKEMON = "GET_NAME_POKEMON";
+export const CREATE_POKEMON = "CREATE_POKEMON";
+export const POKEMON_DETAIL = "POKEMON_DETAIL";
 
 //*TRAE A LOS POKEMONS
 export function getAllPokemon() {
@@ -38,6 +40,40 @@ export function getAllTypes() {
     }
   };
 }
+
+//*CREATE POKEMON
+export function createPokemon(payload) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/pokemon",
+        payload
+      );
+      return dispatch({
+        type: CREATE_POKEMON,
+        payload: response.data,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+}
+
+//*POKE DETAILS
+export function pokemonDetail(id) {
+  return async function (dispatch) {
+    try {
+      const response = await axios.get(`http://localhost:3001/pokemon ${id}`);
+      return dispatch({
+        type: POKEMON_DETAIL,
+        payload: response.data,
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  };
+}
+
 //*TRAE LOS POKE POR EL NAME
 export function getNamePokemon(name) {
   return async function (dispatch) {

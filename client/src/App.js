@@ -4,7 +4,8 @@ import { Route, Switch } from "react-router-dom";
 import NavBar from "./components/NavBar/navBar";
 import LandingPage from "./components/LandingPage/LandingPage";
 import Home from "./components/Home/home";
-import createPokemon from "./components/CreatePokemon/createPokemon";
+import CreateNewPokemon from "./components/CreatePokemon/createPokemon";
+import PokemonDetails from "./components/PokemonDetail/pokemonDetail";
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={LandingPage} />
         <Route path="/home" component={Home} />
-        <Route path="/create" element={createPokemon} />
+        <Route path="/create" component={CreateNewPokemon} />
+        <Route path="/detail/:id" component={PokemonDetails} />
       </Switch>
     </div>
   );
