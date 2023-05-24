@@ -13,6 +13,14 @@ const createPokemon = async (
   weight,
   type
 ) => {
+  // Buscar los tipos de Pokémon en la base de datos
+  const foundTypes = await Type.findAll({
+    where: {
+      name: type, // Utilizar el campo 'name' en lugar de 'id'
+    },
+  });
+
+  // Crear el nuevo Pokémon y asociarlo a los tipos encontrados
   const createdPokemon = await Pokemon.create({
     name,
     image,
@@ -24,24 +32,16 @@ const createPokemon = async (
     weight,
   });
 
-  // Buscar los tipos de Pokémon en la base de datos
-  const foundTypes = await Type.findAll({
-    where: {
-      name: type, // Utilizar el campo 'id' en lugar de 'name'
-    },
-  });
-
-  // Asociar los tipos al nuevo Pokémon
   await createdPokemon.addTypes(foundTypes);
 
   return createdPokemon;
 };
 
-//! Trae info de los Pokemon en la bdd
 const getPokemonDB = async () => {
   const allPokemon = await Pokemon.findAll({
     attributes: [
       "id",
+      "image",
       "name",
       "attack",
       "defense",
@@ -61,8 +61,6 @@ const getPokemonDB = async () => {
   return allPokemon;
 };
 
-//!Trae info de la API
-
 const getNPokemon = async () => {
   const pokemonData = (await axios(`${URL_API}?offset=0&limit=100`)).data;
   const allPokemons = pokemonData.results;
@@ -71,8 +69,6 @@ const getNPokemon = async () => {
 };
 
 const getPokemonApi = async () => {
-  const pokemonDb = await Pokemon.findAll();
-
   const pokemonList = await getNPokemon();
   const pokemonDetails = await axios.all(
     pokemonList.map(async (pokemon) => {
@@ -93,30 +89,28 @@ const getPokemonApi = async () => {
     })
   );
 
-  const pokemons = [...pokemonDetails, ...pokemonDb];
+  const pokemons = [...pokemonDetails];
   return pokemons;
 };
 
-//! Concatenar los datos de la BDD y la API
-
-const getAllPokemon = async (name) => {
+const getAllPokemon = async () => {
   const apiInfo = await getPokemonApi();
   const dbInfo = await getPokemonDB();
   const infoTotal = [...apiInfo, ...dbInfo];
 
-  if (name) {
-    const pokeFilter = infoTotal.filter((pokemon) =>
-      pokemon.name.toLowerCase().includes(name.toLowerCase())
-    );
-    return pokeFilter;
-  } else {
-    return infoTotal;
-  }
+  return infoTotal;
 };
 
 const searchPokemonByName = async (name) => {
   const pokemonDb = await Pokemon.findAll({
     where: { name: name.toLowerCase() },
+    include: {
+      model: Type,
+      attributes: ["name"],
+      through: {
+        attributes: [],
+      },
+    },
   });
 
   if (pokemonDb.length > 0) {
@@ -142,22 +136,32 @@ const searchPokemonByName = async (name) => {
 
 const pokemonById = async (id) => {
   if (isNaN(id)) {
-    const pokeDb = await pokeDb.findByPk(id);
-    return pokeDb;
+    const pokeDb = await Pokemon.findByPk(id, {
+      include: {
+        model: Type,
+        attributes: ["name"],
+        through: {
+          attributes: [],
+        },
+      },
+    });
+    return [pokeDb];
   }
   const pokeOne = (await axios(`${URL_API}/${id}`)).data;
-  return {
-    id: pokeOne.id,
-    name: pokeOne.name,
-    image: pokeOne.sprites.other.dream_world.front_default,
-    hp: pokeOne.stats[0].base_stat,
-    attack: pokeOne.stats[1].base_stat,
-    defense: pokeOne.stats[2].base_stat,
-    speed: pokeOne.stats[5].base_stat,
-    height: pokeOne.height,
-    weight: pokeOne.weight,
-    type: pokeOne.types.map((type) => type.type.name),
-  };
+  return [
+    {
+      id: pokeOne.id,
+      name: pokeOne.name,
+      image: pokeOne.sprites.other.dream_world.front_default,
+      hp: pokeOne.stats[0].base_stat,
+      attack: pokeOne.stats[1].base_stat,
+      defense: pokeOne.stats[2].base_stat,
+      speed: pokeOne.stats[5].base_stat,
+      height: pokeOne.height,
+      weight: pokeOne.weight,
+      type: pokeOne.types.map((type) => type.type.name),
+    },
+  ];
 };
 
 module.exports = {
