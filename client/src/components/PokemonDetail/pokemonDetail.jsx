@@ -1,40 +1,114 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { pokemonDetail } from "../../Redux/action/action";
+import { useDispatch } from "react-redux";
+import { pokemonDetail, cleanDetail } from "../../Redux/action/action";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { connect } from "react-redux";
+import pokePerType from "../pokePerType/pokePerType";
+import styles from "./styles.css";
+import logo from "../../assets/LoadingPoke.gif";
 
-export default function PokemonDetails() {
-  const dispatch = useDispatch();
+const PokemonDetails = ({ details }) => {
   const { id } = useParams();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(pokemonDetail(id));
-  }, [dispatch, id]);
+    return () => dispatch(cleanDetail());
+  }, [id, dispatch]);
 
-  const myPokemon = useSelector((state) => state.PokemonDetails);
+  //* condición en el que muestra un detalle en carga
+  if (!details.length) {
+    return <img className={`logo ${styles.logo}`} src={logo} alt="" />;
+  }
+  let { name, image, hp, attack, defense, speed, height, weight, type, Types } =
+    details[0];
+
+  type = type ? type : Types;
+  type = type.map((tp) => {
+    if (typeof tp === "string") return tp;
+    return tp.name;
+  });
 
   return (
     <div>
-      {Object.keys(myPokemon).length > 0 ? (
-        <div>
-          <h1>Id: {myPokemon.id}</h1>
-          <h1>Hp: {myPokemon.name}</h1>
-          <h1>Attack: {myPokemon.attack}</h1>
-          <h1>Defense: {myPokemon.defense}</h1>
-          <h1>Speed: {myPokemon?.speed}</h1>
-          <h1>Height: {myPokemon?.height}</h1>
-          <h1>Weight: {myPokemon?.weight}</h1>
-          <h1>image: {myPokemon.image}</h1>
-          <h1>
-            Types:{" "}
-            {!myPokemon.createdInDb
-              ? myPokemon.type + " "
-              : myPokemon.Types.map((ty) => ty.name + " ")}
-          </h1>
+      <main className="container main pokemon">
+        <div className="header-main-pokemon">
+          <span className="number-pokemon">#{id}</span>
+          <div className="container-info-pokemon">
+            <h1 className="name">{name}</h1>
+
+            <div className="info-pokemon">
+              <div className="group-info">
+                <p>Height</p>
+                <span>{height} Cm</span>
+                <p>Weight</p>
+                <span>{weight} Gr</span>
+              </div>
+            </div>
+          </div>
         </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+
+        <div className="container-img-pokemon">
+          <img src={image} alt={name} />
+        </div>
+        <div className="card-types">
+          <div className="card-types">{type?.join(", ")}</div>
+        </div>
+
+        <div className="container-stats">
+          <h1>Stats</h1>
+          <div className="stats">
+            <div className="stat-group">
+              <span>Hp</span>
+              <div className="progress-bar" style={{ width: `${hp}%` }}></div>
+              <span className="counter-stats">{hp}</span>
+            </div>
+
+            <div className="stat-group">
+              <span>Attack</span>
+              <div
+                className="progress-bar"
+                style={{ width: `${attack}%` }}
+              ></div>
+              <span className="counter-stats">{attack}</span>
+            </div>
+
+            <div className="stat-group">
+              <span>Defense</span>
+              <div
+                className="progress-bar"
+                style={{ width: `${defense}%` }}
+              ></div>
+              <span className="counter-stats">{defense}</span>
+            </div>
+
+            <div className="stat-group">
+              <span>Speed</span>
+              <div
+                className="progress-bar"
+                style={{ width: `${speed}%` }}
+              ></div>
+              <span className="counter-stats">{speed}</span>
+            </div>
+          </div>
+        </div>
+      </main>
+      <div>
+        <button className="bar">
+          <Link to="/home" className="bar">
+            Home
+          </Link>
+        </button>
+      </div>
     </div>
   );
+};
+function mapStateToProps(state) {
+  return {
+    details: state.Details,
+  };
 }
+
+export default connect(mapStateToProps, null)(PokemonDetails);

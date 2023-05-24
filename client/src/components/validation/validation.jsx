@@ -7,15 +7,19 @@ export default function validateForm(input) {
     errors.name = "The name cannot contain numbers";
   }
 
+  if (!input.type) {
+    errors.name = "Type is required";
+  }
+
   if (!input.image) {
     errors.image = "Image is required";
   }
 
-  const numberFields = ["attack", "defense"];
+  const errorNum = ["attack", "defense", "hp"];
 
-  numberFields.forEach((field) => {
-    if (input[field] === "" || isNaN(input[field]) || input[field] < 0) {
-      errors[field] = ` ${field} is required`;
+  errorNum.forEach((value) => {
+    if (input[value] === "" || isNaN(input[value]) || input[value] < 0) {
+      errors[value] = ` ${value} is required`;
     }
   });
 

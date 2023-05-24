@@ -6,14 +6,15 @@ import {
   ORDER_BY_NAME,
   ORDER_BY_ATTACK,
   FILTER_CREATED,
-  POKEMON_DETAIL,
+  GET_DETAILS,
+  GET_NAME,
+  CLEAN_DETAIL,
 } from "../action/action";
 
 const initialState = {
   Pokemons: [],
   allPoke: [],
-  Types: [],
-  Details: [],
+  Details: {},
 };
 
 export function rootReducer(state = initialState, action) {
@@ -31,13 +32,18 @@ export function rootReducer(state = initialState, action) {
         Types: action.payload,
       };
 
+    case GET_NAME:
+      return {
+        ...state,
+        Pokemons: [action.payload],
+      };
+
     case CREATE_POKEMON:
       return {
         ...state,
-        Pokemons: action.payload,
       };
 
-    case POKEMON_DETAIL:
+    case GET_DETAILS:
       return {
         ...state,
         Details: action.payload,
@@ -45,13 +51,23 @@ export function rootReducer(state = initialState, action) {
 
     case FILTER_BY_TYPES:
       const { allPoke } = state;
-      let filterPoke = action.payload;
-      filterPoke =
-        action.payload === "All"
-          ? (filterPoke = allPoke)
-          : (filterPoke = allPoke.filter((pk) =>
-              pk.type.includes(action.payload)
-            ));
+      const filterType = action.payload;
+      let filterPoke;
+
+      if (filterType === "All") {
+        filterPoke = allPoke;
+      } else {
+        filterPoke = allPoke.filter((pk) => {
+          if (pk.Types) {
+            // Verificar si existe la propiedad "Types"
+            return pk.Types.includes(filterType);
+          } else {
+            // Si no existe la propiedad "Types", usar la propiedad "type"
+            return pk.type.includes(filterType);
+          }
+        });
+      }
+
       return {
         ...state,
         Pokemons: filterPoke,
@@ -110,13 +126,21 @@ export function rootReducer(state = initialState, action) {
       };
 
     case FILTER_CREATED:
-      const allPokeCreated =
-        action.payload === "CREATED"
-          ? state.allPoke.filter((pk) => pk.createdInDb === true)
-          : state.allPoke.filter((pk) => pk.createdInDb === false);
+      const allPokemons = state.allPoke;
+      let createdFilter;
+
+      if (action.payload === "CREATED") {
+        createdFilter = allPokemons.filter((pokemon) => pokemon.created);
+      } else if (action.payload === "existing") {
+        createdFilter = allPokemons.filter((pokemon) => !pokemon.created);
+      }
+
+      return { ...state, pokemons: createdFilter || allPokemons };
+
+    case CLEAN_DETAIL:
       return {
         ...state,
-        Pokemons: action.payload === "All" ? state.allPoke : allPokeCreated,
+        Details: {},
       };
 
     default:

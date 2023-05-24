@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import { createPokemon, getAllTypes } from "../../Redux/action/action";
 import { useDispatch, useSelector } from "react-redux";
 import validateForm from "../validation/validation";
+import styles from "./create.style.css";
 
 export default function CreateNewPokemon() {
   const dispatch = useDispatch();
@@ -13,6 +14,7 @@ export default function CreateNewPokemon() {
 
   const [input, setInput] = useState({
     name: "",
+    hp: "",
     attack: "",
     defense: "",
     speed: "",
@@ -51,6 +53,7 @@ export default function CreateNewPokemon() {
     alert("pokemon successfully created");
     setInput({
       name: "",
+      hp: "",
       attack: "",
       defense: "",
       speed: "",
@@ -64,97 +67,112 @@ export default function CreateNewPokemon() {
 
   useEffect(() => {
     dispatch(getAllTypes());
-  }, []);
+  }, [dispatch]);
 
   return (
     <div>
-      <h1>CREATE POKEMON</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Name:</label>
-          <input
-            type="text"
-            value={input.name}
-            name="name"
-            onChange={handleChange}
-          />
-          {errors.name && <p className="error">{errors.name}</p>}
-        </div>
-        <div>
-          <label>Attack:</label>
-          <input
-            type="number"
-            value={input.attack}
-            name="attack"
-            onChange={handleChange}
-          />
-          {errors.attack && <p className="error">{errors.attack}</p>}
-        </div>
-        <div>
-          <label>Defense:</label>
-          <input
-            type="number"
-            value={input.defense}
-            name="defense"
-            onChange={handleChange}
-          />
-          {errors.defense && <p className="error">{errors.defense}</p>}
-        </div>
-        <div>
-          <label>Speed:</label>
-          <input
-            type="number"
-            value={input.speed}
-            name="speed"
-            onChange={handleChange}
-          />
-          {errors.speed && <p className="error">{errors.speed}</p>}
-        </div>
-        <div>
-          <label>Height:</label>
-          <input
-            type="number"
-            value={input.height}
-            name="height"
-            onChange={handleChange}
-          />
-          {errors.height && <p className="error">{errors.height}</p>}
-        </div>
-        <div>
-          <label>Weight:</label>
-          <input
-            type="number"
-            value={input.weight}
-            name="weight"
-            onChange={handleChange}
-          />
-          {errors.weight && <p className="error">{errors.weight}</p>}
-        </div>
+      <div className="create-pokemon">
+        <h1>CREATE POKEMON</h1>
 
-        <div>
-          <label>Image:</label>
-          <input
-            type="text"
-            value={input.image}
-            name="image"
-            onChange={handleChange}
-          />
-          {errors.image && <p className="error">{errors.image}</p>}
-        </div>
-        <div>
-          <select onChange={handleSelect}>
-            <label>Types:</label>
-            {types.map((type) => (
-              <option value={type.name}>{type.name}</option>
-            ))}
-          </select>
-          <ul>
-            <il>{input.type.map((ty) => ty + " ,")}</il>
-          </ul>
-        </div>
+        <form onSubmit={handleSubmit}>
+          <div>
+            <label>Name:</label>
+            <input
+              type="text"
+              value={input.name}
+              name="name"
+              onChange={handleChange}
+            />
+            {errors.name && <p className="error">{errors.name}</p>}
+          </div>
+          <div>
+            <label>Attack:</label>
+            <input
+              type="number"
+              value={input.attack}
+              name="attack"
+              onChange={handleChange}
+            />
+            {errors.attack && <p className="error">{errors.attack}</p>}
 
-        <button type="submit">CREATE</button>
-      </form>
+            <div>
+              <label>Hp:</label>
+              <input
+                type="number"
+                value={input.hp}
+                name="hp"
+                onChange={handleChange}
+              />
+            </div>
+            {errors.hp && <p className="error">{errors.hp}</p>}
+          </div>
+          <div>
+            <label>Defense:</label>
+            <input
+              type="number"
+              value={input.defense}
+              name="defense"
+              onChange={handleChange}
+            />
+            {errors.defense && <p className="error">{errors.defense}</p>}
+          </div>
+          <div>
+            <label>Speed:</label>
+            <input
+              type="number"
+              value={input.speed}
+              name="speed"
+              onChange={handleChange}
+            />
+            {errors.speed && <p className="error">{errors.speed}</p>}
+          </div>
+          <div>
+            <label>Height:</label>
+            <input
+              type="number"
+              value={input.height}
+              name="height"
+              onChange={handleChange}
+            />
+            {errors.height && <p className="error">{errors.height}</p>}
+          </div>
+          <div>
+            <label>Weight:</label>
+            <input
+              type="number"
+              value={input.weight}
+              name="weight"
+              onChange={handleChange}
+            />
+            {errors.weight && <p className="error">{errors.weight}</p>}
+          </div>
+
+          <div>
+            <label>Image:</label>
+            <input
+              type="text"
+              value={input.image}
+              name="image"
+              onChange={handleChange}
+            />
+            {errors.image && <p className="error">{errors.image}</p>}
+          </div>
+          <div>
+            <select onChange={handleSelect}>
+              <label>Types:</label>
+              {types.map((type) => (
+                <option value={type.name}>{type.name}</option>
+              ))}
+            </select>
+            <ul>
+              <il>{input.type.map((ty) => ty + " ,")}</il>
+              {errors.type && <p className="error">{errors.type}</p>}
+            </ul>
+          </div>
+
+          <button type="submit">CREATE</button>
+        </form>
+      </div>
     </div>
   );
 }

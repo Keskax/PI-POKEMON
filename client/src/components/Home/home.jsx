@@ -39,11 +39,6 @@ export default function Home() {
     setCurrentPage(pageNumber);
   };
 
-  const handleClick = (event) => {
-    event.preventDefault();
-    dispatch(getAllPokemon());
-  };
-
   function pagePrev() {
     if (currentPage > 1) setCurrentPage(currentPage - 1);
   }
@@ -108,24 +103,21 @@ export default function Home() {
         <option value="HIG">Higher Attack</option>
       </select>
 
-      <span className={style.filter}> Filter by: </span>
+      <span className={style.filter}>Filter by:</span>
       <select onChange={handleFilterTypes} className={style.content}>
-        <option disabled selected defaultValue>
+        <option disabled defaultValue>
           Types
         </option>
-        <option value="All"> All </option>
-        {types.map((tp, index) => (
-          <option onClick={(e) => handleClick(e)} key={index}>
+        <option value="All">All</option>
+        {types?.map((tp, index) => (
+          <option key={index} value={tp.name}>
             {tp.name}
           </option>
         ))}
       </select>
 
-      <select
-        onChange={(event) => handleFilterCreated(event)}
-        className={style.content}
-      >
-        <option disabled selected defaultValue>
+      <select onChange={handleFilterCreated} className={style.content}>
+        <option disabled defaultValue>
           Existing and Created
         </option>
         <option value="All">All</option>
@@ -136,11 +128,12 @@ export default function Home() {
       <div className={style.container}>
         {currentPokemon?.map((poke) => {
           return (
-            <Link to={"/home" + poke.id} className={style.link}>
+            <Link to={"/detail/" + poke.id} className={style.link}>
               <PokemonCard
+                id={poke.id}
                 name={poke.name}
                 image={poke.image}
-                type={poke.type}
+                type={poke.type ? poke.type : poke.Types}
               />
             </Link>
           );

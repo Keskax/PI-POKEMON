@@ -8,7 +8,9 @@ export const ORDER_BY_ATTACK = "ORDER_BY_ATTACK";
 export const FILTER_CREATED = "FILTER_CREATED";
 export const GET_NAME_POKEMON = "GET_NAME_POKEMON";
 export const CREATE_POKEMON = "CREATE_POKEMON";
-export const POKEMON_DETAIL = "POKEMON_DETAIL";
+export const GET_DETAILS = "GET_DETAILS";
+export const GET_NAME = "GET_NAME";
+export const CLEAN_DETAIL = "CLEAN_DETAIL";
 
 //*TRAE A LOS POKEMONS
 export function getAllPokemon() {
@@ -61,13 +63,11 @@ export function createPokemon(payload) {
 
 //*POKE DETAILS
 export function pokemonDetail(id) {
+  console.log("hola", id);
   return async function (dispatch) {
     try {
-      const response = await axios.get(`http://localhost:3001/pokemon ${id}`);
-      return dispatch({
-        type: POKEMON_DETAIL,
-        payload: response.data,
-      });
+      const { data } = await axios.get(`http://localhost:3001/pokemon/${id}`);
+      dispatch({ type: GET_DETAILS, payload: data });
     } catch (err) {
       console.error(err);
     }
@@ -82,7 +82,7 @@ export function getNamePokemon(name) {
         `http://localhost:3001/pokemon/name?name=${name}`
       );
       return dispatch({
-        type: GET_NAME_POKEMON,
+        type: GET_NAME,
         payload: response.data,
       });
     } catch (err) {
@@ -121,5 +121,11 @@ export function filterCreated(payload) {
   return {
     type: FILTER_CREATED,
     payload,
+  };
+}
+
+export function cleanDetail() {
+  return {
+    type: CLEAN_DETAIL,
   };
 }
