@@ -4,14 +4,16 @@ import { pokemonDetail, cleanDetail } from "../../Redux/action/action";
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
-import pokePerType from "../pokePerType/pokePerType";
+import { deletePokemon } from "../../Redux/action/action";
+import { useHistory } from "react-router-dom";
 import styles from "./styles.css";
-import logo from "../../assets/LoadingPoke.gif";
+import logo from "../../assets/PokeLoading.gif";
 
 const PokemonDetails = ({ details }) => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   useEffect(() => {
     dispatch(pokemonDetail(id));
@@ -31,6 +33,12 @@ const PokemonDetails = ({ details }) => {
     return tp.name;
   });
 
+  function handleDeletePokemon(id) {
+    dispatch(deletePokemon(id));
+
+    history.push("/home");
+  }
+
   return (
     <div>
       <main className="container main pokemon">
@@ -38,6 +46,13 @@ const PokemonDetails = ({ details }) => {
           <span className="number-pokemon">#{id}</span>
           <div className="container-info-pokemon">
             <h1 className="name">{name}</h1>
+            <button
+              className="close-button"
+              type="button"
+              onClick={() => handleDeletePokemon(id)}
+            >
+              X
+            </button>
 
             <div className="info-pokemon">
               <div className="group-info">

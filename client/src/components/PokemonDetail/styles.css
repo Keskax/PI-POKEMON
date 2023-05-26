@@ -141,5 +141,21 @@
 }
 
 .logo {
-  width: 80%;
+  width: 60%;
+}
+
+.close-button {
+  position: absolute;
+  right: 1rem;
+  font-size: 45px;
+  margin-top: 40px;
+  margin-bottom: 340px;
+  font-weight: 500;
+  color: #83c5be;
+  border: none;
+  background: transparent;
+}
+
+.close-button:hover {
+  transform: translateY(-3px);
 }

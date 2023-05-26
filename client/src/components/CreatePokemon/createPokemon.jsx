@@ -3,12 +3,14 @@ import { useHistory } from "react-router-dom";
 import { createPokemon, getAllTypes } from "../../Redux/action/action";
 import { useDispatch, useSelector } from "react-redux";
 import validateForm from "../validation/validation";
-import styles from "./create.style.css";
+import "./create.style.css";
 
 export default function CreateNewPokemon() {
   const dispatch = useDispatch();
   const history = useHistory();
   const types = useSelector((state) => state.Types);
+
+  const [currentPage, setCurrentPage] = useState("");
 
   const [errors, setErrors] = useState({});
 
@@ -49,6 +51,7 @@ export default function CreateNewPokemon() {
   //*fn que hace que se ejecute el botón de crear
   function handleSubmit(event) {
     event.preventDefault();
+    setCurrentPage(1);
     dispatch(createPokemon(input));
     alert("pokemon successfully created");
     setInput({
@@ -65,10 +68,21 @@ export default function CreateNewPokemon() {
     history.push("/home");
   }
 
+  // const disable = () => {
+  //   let disabled = true;
+  //   for (let error in errors) {
+  //     if (errors[error] === "") disabled = false;
+  //     else {
+  //       disabled = true;
+  //       break;
+  //     }
+  //   }
+  //   return disabled;
+  // };
+
   useEffect(() => {
     dispatch(getAllTypes());
   }, [dispatch]);
-
   return (
     <div>
       <div className="create-pokemon">
@@ -166,8 +180,8 @@ export default function CreateNewPokemon() {
             </select>
             <ul>
               <il>{input.type.map((ty) => ty + " ,")}</il>
-              {errors.type && <p className="error">{errors.type}</p>}
             </ul>
+            {errors.type && <p className="error">{errors.type}</p>}
           </div>
 
           <button type="submit">CREATE</button>

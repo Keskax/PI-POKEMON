@@ -11,6 +11,7 @@ export const CREATE_POKEMON = "CREATE_POKEMON";
 export const GET_DETAILS = "GET_DETAILS";
 export const GET_NAME = "GET_NAME";
 export const CLEAN_DETAIL = "CLEAN_DETAIL";
+export const DELETE_POKEMON = "DELETE_POKEMON";
 
 //*TRAE A LOS POKEMONS
 export function getAllPokemon() {
@@ -51,10 +52,11 @@ export function createPokemon(payload) {
         "http://localhost:3001/pokemon",
         payload
       );
-      return dispatch({
+      dispatch({
         type: CREATE_POKEMON,
         payload: response.data,
       });
+      dispatch(getAllPokemon());
     } catch (err) {
       console.error(err);
     }
@@ -63,10 +65,25 @@ export function createPokemon(payload) {
 
 //*POKE DETAILS
 export function pokemonDetail(id) {
-  console.log("hola", id);
   return async function (dispatch) {
     try {
       const { data } = await axios.get(`http://localhost:3001/pokemon/${id}`);
+      dispatch({ type: GET_DETAILS, payload: data });
+    } catch (err) {
+      console.error(err);
+      alert("the id does not correspond to any pokemon");
+    }
+  };
+}
+
+//*BORRA LOS POKE
+export function deletePokemon(id) {
+  return async function (dispatch) {
+    try {
+      const { data } = await axios.delete(
+        `http://localhost:3001/pokemon/${id}`
+      );
+      alert("Pokemon deleted successfully");
       dispatch({ type: GET_DETAILS, payload: data });
     } catch (err) {
       console.error(err);

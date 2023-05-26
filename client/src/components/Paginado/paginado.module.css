@@ -22,30 +22,11 @@
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-.number {
-  width: 30px;
-  height: 30px;
-  border-radius: 15%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 14px;
-  font-weight: 500;
-  border: 2px solid blueviolet;
-  background-color: #fff;
-  color: rgb(41, 41, 41);
-  font-size: 24px;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-}
 
-.pageAll {
-  background-color: #666;
+.number.currentPage {
+  background-color: blueviolet;
   color: #fff;
-  border: none;
-  width: 34px;
-  height: 34px;
-  margin: 0 1px;
+  border-color: blueviolet;
 }
 
 .number:hover {

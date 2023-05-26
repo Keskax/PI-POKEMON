@@ -23,7 +23,9 @@ export default function Paginado({
         </div>
         {pageNumber.map((number) => (
           <div
-            className={currentPage === number ? style.pageAll : style.number}
+            className={`${style.number} ${
+              currentPage === number ? style.currentPage : ""
+            }`}
             key={number}
             onClick={() => paginado(number)}
           >

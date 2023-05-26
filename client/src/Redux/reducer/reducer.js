@@ -9,6 +9,7 @@ import {
   GET_DETAILS,
   GET_NAME,
   CLEAN_DETAIL,
+  DELETE_POKEMON,
 } from "../action/action";
 
 const initialState = {
@@ -126,21 +127,30 @@ export function rootReducer(state = initialState, action) {
       };
 
     case FILTER_CREATED:
-      const allPokemons = state.allPoke;
-      let createdFilter;
-
-      if (action.payload === "CREATED") {
-        createdFilter = allPokemons.filter((pokemon) => pokemon.created);
-      } else if (action.payload === "existing") {
-        createdFilter = allPokemons.filter((pokemon) => !pokemon.created);
-      }
-
-      return { ...state, pokemons: createdFilter || allPokemons };
+      const createdFilter =
+        action.payload === "CREATED"
+          ? state.allPoke.filter((pk) => pk.createdInDb)
+          : state.allPoke.filter((pk) => !pk.createdInDb);
+      return {
+        ...state,
+        Pokemons:
+          action.payload === "All"
+            ? state.allPoke
+            : createdFilter.length
+            ? createdFilter
+            : [],
+      };
 
     case CLEAN_DETAIL:
       return {
         ...state,
         Details: {},
+      };
+
+    case DELETE_POKEMON:
+      return {
+        ...state,
+        Pokemons: [],
       };
 
     default:
