@@ -31,7 +31,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         validate: {
           min: 0,
-          max: 999,
+          max: 200,
         },
       },
 
@@ -41,7 +41,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         validate: {
           min: 0,
-          max: 999,
+          max: 200,
         },
       },
 
@@ -51,7 +51,7 @@ module.exports = (sequelize) => {
         allowNull: false,
         validate: {
           min: 0,
-          max: 999,
+          max: 200,
         },
       },
 
@@ -60,7 +60,7 @@ module.exports = (sequelize) => {
         defaultValue: 0,
         validate: {
           min: 0,
-          max: 999,
+          max: 200,
         },
       },
 
@@ -69,7 +69,7 @@ module.exports = (sequelize) => {
         defaultValue: 0,
         validate: {
           min: 0,
-          max: 999,
+          max: 200,
         },
       },
 
@@ -78,7 +78,7 @@ module.exports = (sequelize) => {
         defaultValue: 0,
         validate: {
           min: 0,
-          max: 9999,
+          max: 200,
         },
       },
 

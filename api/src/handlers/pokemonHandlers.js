@@ -3,6 +3,7 @@ const {
   getAllPokemon,
   pokemonById,
   searchPokemonByName,
+  PokemonDelete,
 } = require("../controllers/pokemonControllers");
 
 const getPokemonDBHandler = async (req, res) => {
@@ -24,7 +25,7 @@ const createPokemonHandler = async (req, res) => {
     const { name, image, hp, attack, defense, speed, height, weight, type } =
       req.body;
 
-    // Asegurarse de que los tipos se pasen como un arreglo
+    //* Asegurarse de que los tipos se pasen como un arreglo
     const types = Array.isArray(type) ? type : [type];
 
     const newPoke = await createPokemon(
@@ -36,7 +37,7 @@ const createPokemonHandler = async (req, res) => {
       speed,
       height,
       weight,
-      type // Pasar los tipos como un arreglo
+      type
     );
 
     const response = {
@@ -64,7 +65,7 @@ const pokemonByIdHandler = async (req, res) => {
   try {
     const pokemon = await pokemonById(id);
     if (!pokemon) {
-      res.status(404).json({ error: "Pokemon not found" });
+      res.status(404).json({ error: "id not found" });
     } else {
       res.json(pokemon);
     }
@@ -80,7 +81,17 @@ const searchPokemonByNameHandler = async (req, res) => {
     res.json(result);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: "Internal server error" });
+    res.status(500).json({ message: "Pokemon not found" });
+  }
+};
+
+const deletePokemonHandler = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const response = await PokemonDelete(id);
+    res.json(response);
+  } catch (error) {
+    res.status(500).send({ message: "Error deleting the Pokémon" });
   }
 };
 
@@ -90,4 +101,5 @@ module.exports = {
   getPokemonHandler,
   pokemonByIdHandler,
   searchPokemonByNameHandler,
+  deletePokemonHandler,
 };

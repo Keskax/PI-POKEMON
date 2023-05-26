@@ -16,7 +16,7 @@ const createPokemon = async (
   // Buscar los tipos de Pokémon en la base de datos
   const foundTypes = await Type.findAll({
     where: {
-      name: type, // Utilizar el campo 'name' en lugar de 'id'
+      name: type,
     },
   });
 
@@ -48,6 +48,7 @@ const getPokemonDB = async () => {
       "speed",
       "height",
       "weight",
+      "createdInDb",
     ],
     include: {
       model: Type,
@@ -62,7 +63,7 @@ const getPokemonDB = async () => {
 };
 
 const getNPokemon = async () => {
-  const pokemonData = (await axios(`${URL_API}?offset=0&limit=100`)).data;
+  const pokemonData = (await axios(`${URL_API}?offset=0&limit=150`)).data;
   const allPokemons = pokemonData.results;
 
   return allPokemons;
@@ -96,7 +97,7 @@ const getPokemonApi = async () => {
 const getAllPokemon = async () => {
   const apiInfo = await getPokemonApi();
   const dbInfo = await getPokemonDB();
-  const infoTotal = [...apiInfo, ...dbInfo];
+  const infoTotal = [...dbInfo, ...apiInfo];
 
   return infoTotal;
 };
@@ -164,9 +165,14 @@ const pokemonById = async (id) => {
   ];
 };
 
+const PokemonDelete = async (id) => {
+  await Pokemon.destroy({ where: { id } });
+};
+
 module.exports = {
   createPokemon,
   getAllPokemon,
   pokemonById,
   searchPokemonByName,
+  PokemonDelete,
 };
