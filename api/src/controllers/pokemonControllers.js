@@ -16,7 +16,7 @@ const createPokemon = async (
   // Buscar los tipos de Pokémon en la base de datos
   const foundTypes = await Type.findAll({
     where: {
-      name: type,
+      name: type,   
     },
   });
 
