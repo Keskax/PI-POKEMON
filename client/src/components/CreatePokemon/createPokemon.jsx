@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { createPokemon, getAllTypes } from "../../Redux/action/action";
 import { useDispatch, useSelector } from "react-redux";
 import validateForm from "../validation/validation";
@@ -13,6 +13,10 @@ export default function CreateNewPokemon() {
   const [currentPage, setCurrentPage] = useState("");
 
   const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    console.log(errors);
+  }, [errors]);
 
   const [input, setInput] = useState({
     name: "",
@@ -68,17 +72,13 @@ export default function CreateNewPokemon() {
     history.push("/home");
   }
 
+  // //*
   // const disable = () => {
-  //   let disabled = true;
-  //   for (let error in errors) {
-  //     if (errors[error] === "") disabled = false;
-  //     else {
-  //       disabled = true;
-  //       break;
-  //     }
-  //   }
-  //   return disabled;
+  //   if (Object.keys(errors).length) return true;
+  //   return false;
   // };
+
+  // //*
 
   useEffect(() => {
     dispatch(getAllTypes());
@@ -160,7 +160,6 @@ export default function CreateNewPokemon() {
             />
             {errors.weight && <p className="error">{errors.weight}</p>}
           </div>
-
           <div>
             <label>Image:</label>
             <input
@@ -184,7 +183,9 @@ export default function CreateNewPokemon() {
             {errors.type && <p className="error">{errors.type}</p>}
           </div>
 
-          <button type="submit">CREATE</button>
+          <button disabled={disable} type="submit">
+            CREATE
+          </button>
         </form>
       </div>
     </div>

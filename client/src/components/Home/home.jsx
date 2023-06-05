@@ -62,6 +62,13 @@ export default function Home() {
 
   //!
 
+
+  //*
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [allPokemons]);
+  //*
+
   const [order, setOrder] = useState("");
 
   function handlerOrderByAttack(event) {
