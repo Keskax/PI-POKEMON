@@ -2,9 +2,9 @@ export default function validateForm(input) {
   const errors = {};
 
   if (!input.name) {
-    errors.name = "🔺Name is required";
+    errors.name = "🔺Campo Obligatorio";
   } else if (!/^[a-zA-Z\s]+$/.test(input.name)) {
-    errors.name = "🔺The name cannot contain numbers";
+    errors.name = "🔺El nombre no puede contener números ";
   }
 
   if (!input.type) {

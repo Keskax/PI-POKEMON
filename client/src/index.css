@@ -11,9 +11,6 @@ body {
 *,
 *::before,
 *::after {
-  margin: 15;
-  padding: 10;
-  box-sizing: inherit;
 }
 
 * ::-webkit-scrollbar {

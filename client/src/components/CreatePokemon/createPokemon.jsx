@@ -72,13 +72,13 @@ export default function CreateNewPokemon() {
     history.push("/home");
   }
 
-  // //*
+  // // //*
   // const disable = () => {
   //   if (Object.keys(errors).length) return true;
   //   return false;
   // };
 
-  // //*
+  // // //*
 
   useEffect(() => {
     dispatch(getAllTypes());
@@ -183,7 +183,13 @@ export default function CreateNewPokemon() {
             {errors.type && <p className="error">{errors.type}</p>}
           </div>
 
-          <button disabled={disable} type="submit">
+          <button
+            disabled={
+              Object.values(input).some((value) => value === "") ||
+              (input.type && input.type.length === 0)
+            }
+            type="submit"
+          >
             CREATE
           </button>
         </form>

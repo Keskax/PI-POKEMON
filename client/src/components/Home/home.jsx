@@ -62,7 +62,6 @@ export default function Home() {
 
   //!
 
-
   //*
   useEffect(() => {
     setCurrentPage(1);
