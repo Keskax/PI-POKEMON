@@ -1,6 +1,7 @@
 .paginationCenter {
   display: flex;
   flex-flow: row wrap;
+  width: min(100%, 1450px);
   justify-content: center;
   gap: 8px;
   padding: 12px 0;

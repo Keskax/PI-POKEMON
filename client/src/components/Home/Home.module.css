@@ -7,10 +7,12 @@
   padding: 2em;
   border-radius: 15px;
   gap: 1em;
+  width: min(100%, 1450px);
   flex-wrap: wrap;
 }
 
 .content {
+  width: min(100%, 1450px);
   background-color: #f2f2f2;
   text-decoration: none;
   border: none;

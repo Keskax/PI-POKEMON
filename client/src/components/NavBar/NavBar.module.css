@@ -1,32 +1,52 @@
 .navContainer {
   background-color: blueviolet;
   display: flex;
+  justify-content: space-between; /* Distribuir elementos horizontalmente */
+  align-items: center; /* Centrar verticalmente los elementos */
+  padding: 10px; /* Agregar un poco de espacio alrededor del contenido */
 }
 
 .logo {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  margin-left: 6px;
-  width: 50px; /* ajustar al tamaño deseado */
+  width: 50px;
+  cursor: pointer;
 }
 
 .createPokemon {
   background-color: #f09e23;
   color: #fff;
   font-size: 16px;
-  margin-right: 6px;
   border-radius: 10px;
   padding: 12px 20px;
-  margin-left: 10px;
-  margin-top: 22px; /* Ajusta el valor según sea necesario */
-  margin-bottom: 10px; /* Ajusta el valor según sea necesario */
   cursor: pointer;
   font-family: Montserrat;
   text-decoration: none;
   display: flex;
   justify-content: center;
+  align-items: center; /* Centrar contenido verticalmente */
 }
 
 .createPokemon:hover {
   background-color: #be9655;
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 400px) {
+  .navContainer {
+    flex-direction: column; /* Apilar elementos verticalmente */
+    align-items: flex-start; /* Alinear elementos a la izquierda */
+    padding: 0 10px;
+  }
+
+  .logo {
+    margin-bottom: -10px;
+    margin-left: 175px;
+  }
+
+  .createPokemon {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    flex-grow: 0;
+    margin-left: 94px;
+    width: 55%;
+  }
 }
