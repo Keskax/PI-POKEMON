@@ -17,6 +17,7 @@
   font-size: 16px;
   border-radius: 10px;
   padding: 12px 20px;
+  font-size: 16px;
   cursor: pointer;
   font-family: Montserrat;
   text-decoration: none;
@@ -34,19 +35,23 @@
   .navContainer {
     flex-direction: column; /* Apilar elementos verticalmente */
     align-items: flex-start; /* Alinear elementos a la izquierda */
+
     padding: 0 10px;
   }
 
-  .logo {
-    margin-bottom: -10px;
-    margin-left: 175px;
+  @media (max-width: 400px) {
+    .logo {
+      margin-top: 15px;
+      margin-left: 175px;
+    }
   }
-
-  .createPokemon {
-    margin-top: 10px;
-    margin-bottom: 10px;
-    flex-grow: 0;
-    margin-left: 94px;
-    width: 55%;
+  @media (max-width: 400px) {
+    .createPokemon {
+      margin-top: 10px;
+      margin-bottom: 10px;
+      flex-grow: 0;
+      margin-left: 94px;
+      width: 60%;
+    }
   }
 }

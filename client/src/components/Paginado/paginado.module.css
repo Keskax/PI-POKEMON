@@ -1,7 +1,6 @@
 .paginationCenter {
   display: flex;
   flex-flow: row wrap;
-  width: min(100%, 1450px);
   justify-content: center;
   gap: 8px;
   padding: 12px 0;
@@ -31,7 +30,13 @@
 }
 
 .number:hover {
-  background-color: #f3f3f4;
-  color: #666;
-  border-color: #f3f3f4;
+  background-color: blueviolet;
+  color: #fff;
+  border-color: blueviolet;
+}
+
+@media (max-width: 400px) {
+  .paginationCenter {
+    width: 362px;
+  }
 }

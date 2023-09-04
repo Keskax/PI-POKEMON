@@ -21,7 +21,7 @@ const NavBar = () => {
       <SearchBar />
       <div>
         <Link to="/create" className={style.createPokemon}>
-          CREATE POKEMON
+          Create Pokemon
         </Link>
       </div>
     </div>

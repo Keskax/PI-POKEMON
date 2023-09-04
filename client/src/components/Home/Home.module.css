@@ -18,8 +18,8 @@
   border-radius: 4px;
   color: #555;
   font-size: 15px;
-  margin-top: 55px;
-  padding: 10px 20px;
+  margin-top: 40px;
+  padding: 10px;
   margin-left: 7px;
   width: 200px;
   -webkit-appearance: none;
@@ -33,23 +33,28 @@
   font-size: 15px;
   margin-top: 55px;
   padding: 10px 20px;
-
-  width: 200px;
-
+  text-align: center;
   font-family: Montserrat;
 }
 
 @media (max-width: 400px) {
-  .content {
-    flex-direction: column;
+  .container {
     align-items: center;
-    padding: 1em;
   }
 }
 
-.content {
-  min-width: 200px;
-  margin-top: 10px; /* Ajustar el margen superior según sea necesario */
+@media (max-width: 400px) {
+  .content {
+    width: 189px;
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .filter {
+    margin-left: 150px;
+    margin-right: 135px;
+  }
 }
 
 .link {

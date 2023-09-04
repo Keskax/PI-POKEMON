@@ -1,5 +1,6 @@
+/* Contenedor principal */
 .create-pokemon {
-  max-width: 400px;
+  max-width: 400px; /* Ampliamos el ancho máximo para pantallas más grandes */
   margin: 0 auto;
   margin-top: 50px;
   padding: 20px;
@@ -8,6 +9,8 @@
   box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Encabezado */
+
 .create-pokemon h1 {
   text-align: center;
   font-size: 24px;
@@ -15,10 +18,12 @@
   color: #333;
 }
 
+/* Formulario */
 .create-pokemon form {
-  display: flex;
-  flex-direction: column;
+  display: grid; /* Utilizamos CSS Grid para hacerlo responsive */
   gap: 10px;
+
+  margin-right: 20px;
 }
 
 .create-pokemon label {
@@ -29,18 +34,18 @@
 .create-pokemon input[type="text"],
 .create-pokemon input[type="number"],
 .create-pokemon select {
-  width: 100%;
-  padding: 8px;
+  width: 88%;
+  padding: 10px; /* Reducimos el padding para pantallas pequeñas */
   border-radius: 5px;
   border: 1px solid #ccc;
 }
 
+/* Estilo para errores */
 .create-pokemon .error {
   color: red;
 }
 
 .create-pokemon button[type="submit"] {
-  width: 100%;
   padding: 10px;
   background-color: #006d77;
   color: #fff;
@@ -48,9 +53,11 @@
   border: none;
   cursor: pointer;
   font-weight: bold;
+
   font-size: 16px;
 }
 
+/* Lista de elementos */
 .create-pokemon ul {
   list-style-type: none;
   padding-left: 0;
@@ -59,5 +66,22 @@
 
 .create-pokemon ul li {
   display: inline;
-  margin-right: 5px;
+
+  margin-right: 10px;
+}
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 480px) {
+  .create-pokemon {
+    max-width: 90%; /* Hacemos que el contenedor sea el 90% del ancho de la pantalla */
+    padding: 10px; /* Reducimos el padding para pantallas muy pequeñas */
+  }
+
+  .create-pokemon h1 {
+    font-size: 20px;
+  }
+
+  .create-pokemon form {
+    grid-template-columns: 1fr; /* Cambiamos a una sola columna en pantallas pequeñas */
+  }
 }
