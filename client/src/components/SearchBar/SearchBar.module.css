@@ -46,7 +46,7 @@
   .bar input[type="text"] {
     flex-grow: 0;
     width: 50%;
-    margin-right: 0;
+    margin-right: 70px;
     margin-bottom: 10px;
   }
 
@@ -54,7 +54,7 @@
     flex-grow: 0;
     width: 45%;
     margin-top: 3px;
-    margin-right: 0;
+    margin-left: -70px;
   }
 
   .bar button[type="submit"] {

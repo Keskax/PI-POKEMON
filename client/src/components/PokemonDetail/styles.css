@@ -167,7 +167,7 @@
     justify-content: center;
     width: 80%;
 
-    margin-left: 25px;
+    margin-left: 20px;
     margin-top: 130px;
   }
 
@@ -183,5 +183,15 @@
   .close-button {
     margin-right: -10px;
     font-size: 30px;
+  }
+
+  .logo {
+    margin-top: 200px;
+
+    width: 100%;
+  }
+
+  .bar {
+    margin-right: 10px;
   }
 }

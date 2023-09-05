@@ -44,6 +44,7 @@
 @media (max-width: 400px) {
   .container {
     align-items: center;
+    margin-left: -20px;
   }
 }
 
@@ -51,18 +52,19 @@
   .content {
     width: 189px;
     margin-top: 10px;
+    margin-right: 50px;
   }
 }
 @media (max-width: 400px) {
   .filter {
-    margin-left: 150px;
+    margin-left: 90px;
     margin-right: 135px;
   }
 }
 @media (max-width: 400px) {
   .HomeLoading {
-    width: 200rem; /* Ajusta el ancho según tus necesidades */
-    height: 45rem; /* Ajusta la altura según tus necesidades */
+    margin-top: 200px;
+    width: 50rem;
   }
 }
 
