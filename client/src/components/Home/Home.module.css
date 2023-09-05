@@ -11,6 +11,10 @@
   flex-wrap: wrap;
 }
 
+.HomeLoading {
+  justify-content: center;
+}
+
 .content {
   background-color: #f2f2f2;
   text-decoration: none;
@@ -49,11 +53,16 @@
     margin-top: 10px;
   }
 }
-
 @media (max-width: 400px) {
   .filter {
     margin-left: 150px;
     margin-right: 135px;
+  }
+}
+@media (max-width: 400px) {
+  .HomeLoading {
+    width: 200rem; /* Ajusta el ancho según tus necesidades */
+    height: 45rem; /* Ajusta la altura según tus necesidades */
   }
 }
 

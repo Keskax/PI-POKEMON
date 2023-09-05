@@ -17,7 +17,7 @@ export const DELETE_POKEMON = "DELETE_POKEMON";
 export function getAllPokemon() {
   return async function (dispatch) {
     try {
-      const allPoke = await axios.get("http://localhost:3001/pokemon");
+      const allPoke = await axios.get("/pokemon");
 
       return dispatch({
         type: GET_POKEMON,
@@ -33,7 +33,7 @@ export function getAllPokemon() {
 export function getAllTypes() {
   return async function (dispatch) {
     try {
-      const info = await axios.get("http://localhost:3001/types");
+      const info = await axios.get("/types");
       return dispatch({
         type: GET_TYPES,
         payload: info.data,
@@ -48,10 +48,7 @@ export function getAllTypes() {
 export function createPokemon(payload) {
   return async function (dispatch) {
     try {
-      const response = await axios.post(
-        "http://localhost:3001/pokemon",
-        payload
-      );
+      const response = await axios.post("/pokemon", payload);
       dispatch({
         type: CREATE_POKEMON,
         payload: response.data,
@@ -67,7 +64,7 @@ export function createPokemon(payload) {
 export function pokemonDetail(id) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.get(`http://localhost:3001/pokemon/${id}`);
+      const { data } = await axios.get(`/pokemon/${id}`);
       dispatch({ type: GET_DETAILS, payload: data });
     } catch (err) {
       console.error(err);
@@ -80,9 +77,7 @@ export function pokemonDetail(id) {
 export function deletePokemon(id) {
   return async function (dispatch) {
     try {
-      const { data } = await axios.delete(
-        `http://localhost:3001/pokemon/${id}`
-      );
+      const { data } = await axios.delete(`/pokemon/${id}`);
       alert("Pokemon deleted successfully");
       dispatch({ type: GET_DETAILS, payload: data });
     } catch (err) {
@@ -95,9 +90,7 @@ export function deletePokemon(id) {
 export function getNamePokemon(name) {
   return async function (dispatch) {
     try {
-      const response = await axios.get(
-        `http://localhost:3001/pokemon/name?name=${name}`
-      );
+      const response = await axios.get(`/pokemon/name?name=${name}`);
       return dispatch({
         type: GET_NAME,
         payload: response.data,

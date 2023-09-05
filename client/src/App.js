@@ -6,7 +6,8 @@ import LandingPage from "./components/LandingPage/LandingPage";
 import Home from "./components/Home/home";
 import CreateNewPokemon from "./components/CreatePokemon/createPokemon";
 import PokemonDetails from "./components/PokemonDetail/pokemonDetail";
-
+import axios from "axios";
+axios.defaults.baseURL = "http://localhost:3001/";
 function App() {
   return (
     <div className="App">
