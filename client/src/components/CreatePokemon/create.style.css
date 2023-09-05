@@ -73,7 +73,8 @@
 /* Media query para pantallas más pequeñas */
 @media (max-width: 480px) {
   .create-pokemon {
-    max-width: 90%; /* Hacemos que el contenedor sea el 90% del ancho de la pantalla */
+    margin-left: 50px;
+    max-width: 70%; /* Hacemos que el contenedor sea el 90% del ancho de la pantalla */
     padding: 10px; /* Reducimos el padding para pantallas muy pequeñas */
   }
 

@@ -41,7 +41,7 @@
   @media (max-width: 400px) {
     .logo {
       margin-top: 15px;
-      margin-left: 145px;
+      margin-left: 160px;
     }
   }
   @media (max-width: 400px) {
@@ -49,8 +49,8 @@
       margin-top: 10px;
       margin-bottom: 10px;
       flex-grow: 0;
-      margin-left: 58px;
-      width: 87%;
+      margin-left: 80px;
+      width: 79%;
       padding: 10px;
     }
   }

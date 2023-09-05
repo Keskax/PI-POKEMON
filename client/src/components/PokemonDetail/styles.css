@@ -167,7 +167,7 @@
     justify-content: center;
     width: 80%;
 
-    margin-left: 20px;
+    margin-left: 40px;
     margin-top: 130px;
   }
 
@@ -187,11 +187,12 @@
 
   .logo {
     margin-top: 200px;
-
+    margin-left: 5px;
     width: 100%;
   }
 
   .bar {
-    margin-right: 10px;
+    margin-right: 20px;
+    margin-left: 20px;
   }
 }
