@@ -7,7 +7,8 @@ import Home from "./components/Home/home";
 import CreateNewPokemon from "./components/CreatePokemon/createPokemon";
 import PokemonDetails from "./components/PokemonDetail/pokemonDetail";
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:3001/";
+axios.defaults.baseURL = "https://pi-pokemon-production-7e3d.up.railway.app/";
+// axios.defaults.baseURL = "http://localhost:3001/";
 function App() {
   return (
     <div className="App">
